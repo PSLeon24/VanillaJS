@@ -6,21 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vanilla JS</title>
-    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-    <!-- <h1 id="title">Grab me!</h1> -->
-    <div class="hello">
-        <h1 class="beauty">Click me!</h1>
-    </div>
-    <!-- <div class="hello">
-        <h1>Grab me!</h1>
-    </div>
-    <div class="hello">
-        <h1>Grab me!</h1>
-    </div> -->
-    <script src="app.js"></script>
+    <form id="login-form" class="hidden">
+        <input type="text" placeholder="What is your name?" required maxlength="15" />
+        <button>Log in</button>
+    </form>
+    <h1 class="hidden" id="greeting"></h1><button id="update-username" class="hidden">이름 수정</button>
+    <script src="/js/greeting.js"></script>
+    <script src="/js/clock.js"></script>
 </body>
 
 </html>
