@@ -2,23 +2,51 @@ const toDoForm = document.querySelector("#todo-form");
 const toDoInput = toDoForm.querySelector("input");
 const toDoList = document.querySelector("#todo-list");
 
+let toDos = [];
+
 const TODO_KEY = "todos";
 
-function handleToDoSubmit(event){
-    event.preventDefault();
-    const newTodo = toDoInput.value;
-    //localStorage.setItem(TODO_KEY, todos);
-    toDoInput.value = "";
-    paintToDo(newTodo);
+
+function saveToDos(){
+    localStorage.setItem(TODO_KEY, JSON.stringify(toDos));
+}
+
+function deleteToDo(event) {
+    const li = event.target.parentElement;
+    li.remove();
 }
 
 function paintToDo(newTodo) {
     const li = document.createElement("li");
     const span = document.createElement("span");
+    span.innerText = newTodo.text;
+    const button = document.createElement("button");
+    button.innerText = " ❌ ";
+    button.addEventListener("click", deleteToDo);
     li.appendChild(span);
-    span.innerText = newTodo;
+    li.appendChild(button);
     toDoList.appendChild(li);
-    //console.log(`I will paint ${newTodo}`);
 }
 
+function handleToDoSubmit(event){
+    event.preventDefault();
+    const newTodo = toDoInput.value;
+    toDoInput.value = ""; // submit(enter) 할 때마다 해당 입력값을 빈 칸으로 초기화
+    const newTodoObj = {
+        id: Date.now(), // number 타입 
+        text:newTodo,
+    }
+    toDos.push(newTodoObj); // toDos arry에 vlaue 저장
+    paintToDo(newTodoObj);
+    saveToDos();
+}
 toDoForm.addEventListener("submit", handleToDoSubmit);
+
+const savedToDos = localStorage.getItem(TODO_KEY);
+
+if(savedToDos !== null){
+    // localstorage에 저장된 todo가 있을 경우
+    const parsedToDos = JSON.parse(savedToDos); 
+    toDos = parsedToDos;
+    parsedToDos.forEach(paintToDo);
+}
