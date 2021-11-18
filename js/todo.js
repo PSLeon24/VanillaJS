@@ -13,11 +13,14 @@ function saveToDos(){
 
 function deleteToDo(event) {
     const li = event.target.parentElement;
+    toDos = toDos.filter(todo => todo.id !== parseInt(li.id)); // li의 id와 변수의 id가 다를 때 true -> 클릭한 li.id와 todo.id가 같은 요소는 false이므로 새로 형성할 배열에서 제외  
+    saveToDos(); 
     li.remove();
 }
 
 function paintToDo(newTodo) {
     const li = document.createElement("li");
+    li.id = newTodo.id;
     const span = document.createElement("span");
     span.innerText = newTodo.text;
     const button = document.createElement("button");
